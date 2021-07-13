@@ -1,4 +1,4 @@
-com/SCAR/Application.java
- com.SCAR.Application
 com/SCAR/HelloController.java
  com.SCAR.HelloController
+com/SCAR/Application.java
+ com.SCAR.Application
