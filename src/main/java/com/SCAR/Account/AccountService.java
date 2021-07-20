@@ -21,12 +21,12 @@ public class AccountService {
     }
 
     @Transactional
-    public Account processNewAccount(SignupForm signupForm) {
+    public Account processNewAccount(SignUpForm signupForm) {
         // TODO send email and confirm
         return saveNewAccount(signupForm);
     }
 
-    private Account saveNewAccount(SignupForm signupForm) {
+    private Account saveNewAccount(SignUpForm signupForm) {
         Account newAccount = Account.builder()
                 .email(signupForm.getEmail())
                 .nickname(signupForm.getNickname())

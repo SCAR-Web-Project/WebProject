@@ -1,6 +1,7 @@
 package com.SCAR.Exception;
 
 import com.SCAR.Account.AccountNotFoundException;
+import com.SCAR.Account.AccountNotValidException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,19 @@ public class CustomizedGlobalExceptionHandler extends ResponseEntityExceptionHan
         );
     }
 
-
+    @ExceptionHandler(AccountNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<CustomizedNotValidResponse> handleCustomizedNotValidException(AccountNotValidException ex, WebRequest webRequest) {
+        return new ResponseEntity<>(
+                CustomizedNotValidResponse.builder()
+                        .CustomValidError(ex.getErrorList())
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .title("Email Already Exists Or NickName Already Exists")
+                        .developerMessage(ex.getClass().getName())
+                        .build(), HttpStatus.BAD_REQUEST
+        );
+    }
 //    @ExceptionHandler(Exception.class)
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    public ResponseEntity<ExceptionResponse> handleAllException(Exception ex, WebRequest webRequest) {
