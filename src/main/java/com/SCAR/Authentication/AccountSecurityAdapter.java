@@ -1,4 +1,4 @@
-package com.SCAR.Account;
+package com.SCAR.Authentication;
 
 import com.SCAR.Domain.Account;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -2,7 +2,7 @@
 
 package com.SCAR.Post;
 
-import com.SCAR.Account.AccountSecurityAdapter;
+import com.SCAR.Authentication.AccountSecurityAdapter;
 import com.SCAR.Domain.Account;
 import com.SCAR.web.dto.PostListResponseDto;
 import com.SCAR.web.dto.PostResponseDto;
@@ -22,8 +22,7 @@ public class PostController {
     private final PostService postsService;
 
     @PostMapping("/post")
-    public Long save(@RequestBody PostSaveRequestDto requestDto, @AuthenticationPrincipal AccountSecurityAdapter user) {
-//        System.out.printf("DEBUG: CURRENT_USES INFO: %s %n", user.getUsername());
+    public Long save(@RequestBody PostSaveRequestDto requestDto, @AuthenticationPrincipal Account user) {
         return postsService.save(requestDto);
     }
 

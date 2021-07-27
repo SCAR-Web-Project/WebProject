@@ -1,5 +1,6 @@
 package com.SCAR.Account;
 
+import com.SCAR.Authentication.AccountSecurityAdapter;
 import com.SCAR.Domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
