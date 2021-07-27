@@ -20,12 +20,6 @@ import java.util.stream.Collectors;
 public class AccountController {
 
     private final AccountService accountService;
-    private final SignUpFormValidator signUpFormValidator;
-
-//    @InitBinder("signupForm")
-//    public void initBinder(WebDataBinder webDataBinder) {
-//        webDataBinder.addValidators(signUpFormValidator);
-//    }
 
     @GetMapping("/account/{id}")
     public ResponseEntity<Account> retrieveOneUser(@PathVariable Long id) {
@@ -37,27 +31,4 @@ public class AccountController {
         return accountService.getAllUser();
     }
 
-    @PostMapping("/account")
-    public ResponseEntity<Account> submitSignUp(@Valid @RequestBody SignUpForm signupForm, BindingResult bindingResult) {
-//        accountService.login(newAccount);
-//        if(errors.hasErrors()) throw new AccountArgumentNotValidException()
-        signUpFormValidator.validate(signupForm, bindingResult);
-        if(bindingResult.hasErrors()) {
-            List<String> errorList =
-                    bindingResult.getGlobalErrors()
-                    .stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-
-            throw new AccountNotValidException(errorList, "Custom Validator work");
-        }
-
-        Account newAccount = accountService.processNewAccount(signupForm);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(newAccount.getId())
-                .toUri();
-        // TODO  계정 생성했을 때 자동으로 로그인 구현
-        return ResponseEntity.created(location).build();
-    }
 }

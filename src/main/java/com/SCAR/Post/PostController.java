@@ -2,12 +2,15 @@
 
 package com.SCAR.Post;
 
+import com.SCAR.Account.AccountSecurityAdapter;
+import com.SCAR.Domain.Account;
 import com.SCAR.web.dto.PostListResponseDto;
 import com.SCAR.web.dto.PostResponseDto;
 import com.SCAR.web.dto.PostSaveRequestDto;
 import com.SCAR.web.dto.PostUpdateRequestDto;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +22,8 @@ public class PostController {
     private final PostService postsService;
 
     @PostMapping("/post")
-    public Long save(@RequestBody PostSaveRequestDto requestDto) {
+    public Long save(@RequestBody PostSaveRequestDto requestDto, @AuthenticationPrincipal AccountSecurityAdapter user) {
+//        System.out.printf("DEBUG: CURRENT_USES INFO: %s %n", user.getUsername());
         return postsService.save(requestDto);
     }
 

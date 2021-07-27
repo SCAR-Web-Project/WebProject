@@ -19,9 +19,9 @@ public class SignUpForm {
     @NotBlank
     private String email;
 
-    @Email
-    @NotBlank
-    private String SKKEmail;
+//    @Email
+//    @NotBlank
+//    private String skkemail;
 
     @NotBlank
     @Length(min=8, max=50)
