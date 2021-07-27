@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
-public class SignupForm {
+public class SignUpForm {
 
     @NotBlank
     @Length(min=3, max=20)
@@ -19,9 +19,9 @@ public class SignupForm {
     @NotBlank
     private String email;
 
-    @Email
-    @NotBlank
-    private String SKKEmail;
+//    @Email
+//    @NotBlank
+//    private String skkemail;
 
     @NotBlank
     @Length(min=8, max=50)
