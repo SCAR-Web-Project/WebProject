@@ -1,10 +1,13 @@
 buildscript{
     ext {
-        springBootVersion = '2.4.4'
+        springBootVersion = '2.5.2'
     }
 
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -28,25 +31,23 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.projectlombok:lombok'
-
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
-//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
+    implementation 'org.projectlombok:lombok:1.18.18'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.h2database:h2'
     implementation 'mysql:mysql-connector-java'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    implementation 'junit:junit:4.13.1'
-
-    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-    implementation 'org.springframework.security:spring-security-taglibs'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    compileOnly 'org.projectlombok:lombok'
+//    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testCompile('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    compile("org.springframework.boot:spring-boot-starter-mail")
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {
