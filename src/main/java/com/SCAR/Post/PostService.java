@@ -4,10 +4,6 @@
 package com.SCAR.Post;
 
 import com.SCAR.Domain.Post;
-import com.SCAR.web.dto.PostListResponseDto;
-import com.SCAR.web.dto.PostResponseDto;
-import com.SCAR.web.dto.PostSaveRequestDto;
-import com.SCAR.web.dto.PostUpdateRequestDto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

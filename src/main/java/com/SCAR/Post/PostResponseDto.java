@@ -1,4 +1,4 @@
-package com.SCAR.web.dto;
+package com.SCAR.Post;
 
 import com.SCAR.Domain.Post;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 //계층 간 데이터 교환을 위한 객체
 
-package com.SCAR.web.dto;
+package com.SCAR.Post;
 
 import lombok.Getter;
 import com.SCAR.Domain.Post;

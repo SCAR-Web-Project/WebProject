@@ -2,12 +2,7 @@
 
 package com.SCAR.Post;
 
-import com.SCAR.Authentication.AccountSecurityAdapter;
 import com.SCAR.Domain.Account;
-import com.SCAR.web.dto.PostListResponseDto;
-import com.SCAR.web.dto.PostResponseDto;
-import com.SCAR.web.dto.PostSaveRequestDto;
-import com.SCAR.web.dto.PostUpdateRequestDto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -3,6 +3,7 @@ package com.SCAR.Domain;
 import com.SCAR.BaseTimeEntity;
 import com.SCAR.Post.PostType;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -17,17 +18,18 @@ public class Post extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
+    @Length(min=5, max=10)
     private String title;
 
-//    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String short_content;  //ja
 
-//    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Lob @Basic(fetch = FetchType.EAGER)
-    private String Image;
+    private String image;
 
     @Enumerated(EnumType.STRING)
     private PostType type;
@@ -44,4 +46,21 @@ public class Post extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
+
+    public Long getId(){ return id; }
+    public void setId(Long id){ this.id = id; }
+    public String getTitle(){ return title; }
+    public void setTitle(){ this.title = title; }
+    public String getContents() {
+        return content;
+    }
+    public void setContents(String content) { this.content = content; }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
 }
