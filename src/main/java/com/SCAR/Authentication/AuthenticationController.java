@@ -7,6 +7,7 @@ import com.SCAR.Account.SignUpFormValidator;
 import com.SCAR.Domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,19 +34,28 @@ public class AuthenticationController {
     private final PasswordEncoder passwordEncoder;
     private final SignUpFormValidator signUpFormValidator;
 
+
     @PostMapping("/auth/sign-up")
-    public ResponseEntity<Map<String, String>> submitSignUp(@Valid @RequestBody SignUpForm signupForm, BindingResult bindingResult) {
+    public ResponseEntity<Map<String, String>> submitSignUp(@Valid @RequestBody SignUpForm signupForm,
+                                                            BindingResult bindingResult,
+                                                            HttpServletRequest httpServletRequest,
+                                                            HttpServletResponse httpServletResponse) {
+
         signUpFormValidator.validate(signupForm, bindingResult);
         if(bindingResult.hasErrors()) {
             List<String> errorList = authenticationService.getSignUpErrorList(bindingResult);
             throw new AccountNotValidException(errorList, "Custom Validator work");
         }
-        return authenticationService.getSuccessSignUpResponse(signupForm);
+
+        Account newAccount = authenticationService.processNewAccount(signupForm);
+
+        return authenticationService.getSuccessSignUpResponse(signupForm, httpServletRequest);
     }
 
     @GetMapping("/auth/log-in")
-    public String logIn(@RequestParam String email, @RequestParam String password) {
-        return authenticationService.loginWithEmailAndPassword(email, password);
+    public String logIn(@RequestParam String email, @RequestParam String password,
+                        HttpServletRequest httpServletRequest) {
+        return authenticationService.loginWithEmailAndPassword(email, password, httpServletRequest);
     }
 
 }

@@ -24,9 +24,7 @@ public class PostService {
     }
 
     private ResponseEntity<Post> saveNewPost(PostSaveRequestDto postSaveRequestDto) {
-        Post savedPost = postRepository.save(
-                postSaveRequestDto.toEntity()
-        );
+        Post savedPost = postRepository.save(postSaveRequestDto.toEntity());
         return ResponseEntity.ok(savedPost);
     }
 

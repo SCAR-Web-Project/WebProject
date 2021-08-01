@@ -6,6 +6,7 @@ import com.SCAR.Domain.Account;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class PostController {
     private final PostService postsService;
 
     @PostMapping("/post")
-    public Long save(@RequestBody PostSaveRequestDto requestDto, @AuthenticationPrincipal Account user) {
+    public Long save(@RequestBody PostSaveRequestDto requestDto, @AuthenticationPrincipal User user) {
         return postsService.save(requestDto);
     }
 

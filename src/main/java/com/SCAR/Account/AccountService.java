@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class AccountService implements UserDetailsService {
+public class AccountService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
@@ -40,13 +40,4 @@ public class AccountService implements UserDetailsService {
         return ResponseEntity.ok(findAccount.get());
     }
 
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(email);
-        if(account == null) {
-            throw new UsernameNotFoundException(String.format("EMAIL : [%s]를 찾을 수 없습니다", email));
-        }
-        return account;
-    }
 }
