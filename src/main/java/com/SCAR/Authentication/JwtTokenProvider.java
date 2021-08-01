@@ -1,5 +1,6 @@
 package com.SCAR.Authentication;
 
+import com.SCAR.Account.AccountService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -25,6 +26,7 @@ public class JwtTokenProvider {
 
     // 토큰 유효시간 1시간
     private final long tokenValidTime = 60 * 60 * 1000L;
+//    private final AccountService accountService;
     private final UserDetailsService userDetailsService;
 
     // 객체 초기화, secretKey를 Base64로 인코딩한다.

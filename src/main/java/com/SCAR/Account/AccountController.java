@@ -1,5 +1,6 @@
 package com.SCAR.Account;
 
+import com.SCAR.Authentication.JwtTokenProvider;
 import com.SCAR.Domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 public class AccountController {
-
     private final AccountService accountService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/account/{id}")
     public ResponseEntity<Account> retrieveOneUser(@PathVariable Long id) {

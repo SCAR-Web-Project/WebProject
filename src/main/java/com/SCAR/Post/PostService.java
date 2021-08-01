@@ -6,6 +6,7 @@ package com.SCAR.Post;
 import com.SCAR.Domain.Post;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,16 +14,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class PostService {
     private final PostRepository postRepository;
 
-    @Transactional
+    public ResponseEntity<Post> processNewPost(PostSaveRequestDto postSaveRequestDto) {
+        return saveNewPost(postSaveRequestDto);
+    }
+
+    private ResponseEntity<Post> saveNewPost(PostSaveRequestDto postSaveRequestDto) {
+        Post savedPost = postRepository.save(
+                postSaveRequestDto.toEntity()
+        );
+        return ResponseEntity.ok(savedPost);
+    }
+
     public Long save(PostSaveRequestDto requestDto) {
         return postRepository.save(requestDto.toEntity()).getId();
     }
 
-    @Transactional
     public Long update(Long id, PostUpdateRequestDto requestDto) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다. id=" + id));
@@ -32,7 +43,6 @@ public class PostService {
         return id;
     }
 
-    @Transactional
     public void delete (Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다. id=" + id));
