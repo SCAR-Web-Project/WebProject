@@ -4,8 +4,11 @@ import com.SCAR.Account.AccountNotValidException;
 import com.SCAR.Account.AccountService;
 import com.SCAR.Account.SignUpForm;
 import com.SCAR.Account.SignUpFormValidator;
+import com.SCAR.Domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -21,33 +24,38 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
 public class AuthenticationController {
-    private final AccountService accountService;
+    private final AuthenticationService authenticationService;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final SignUpFormValidator signUpFormValidator;
 
+
     @PostMapping("/auth/sign-up")
-    public ResponseEntity<Map<String, String>> submitSignUp(@Valid @RequestBody SignUpForm signupForm, BindingResult bindingResult) {
+    public ResponseEntity<Map<String, String>> submitSignUp(@Valid @RequestBody SignUpForm signupForm,
+                                                            BindingResult bindingResult,
+                                                            HttpServletRequest httpServletRequest,
+                                                            HttpServletResponse httpServletResponse) {
+
         signUpFormValidator.validate(signupForm, bindingResult);
         if(bindingResult.hasErrors()) {
-            List<String> errorList = accountService.getSignUpErrorList(bindingResult);
+            List<String> errorList = authenticationService.getSignUpErrorList(bindingResult);
             throw new AccountNotValidException(errorList, "Custom Validator work");
         }
-        return accountService.getSuccessSignUpResponse(signupForm);
+
+        Account newAccount = authenticationService.processNewAccount(signupForm);
+
+        return authenticationService.getSuccessSignUpResponse(signupForm, httpServletRequest);
     }
 
     @GetMapping("/auth/log-in")
-    public String logIn(@RequestParam String email, @RequestParam String password) {
-        return accountService.loginWithEmailAndPassword(email, password);
+    public String logIn(@RequestParam String email, @RequestParam String password,
+                        HttpServletRequest httpServletRequest) {
+        return authenticationService.loginWithEmailAndPassword(email, password, httpServletRequest);
     }
 
-//    @GetMapping("/auth/log-out")
-//    public Long logOut(HttpServletRequest request, HttpServletResponse response) {
-//        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-//        return 1L;
-//    }
 }
