@@ -83,7 +83,7 @@ public class AuthenticationService {
         Account newAccount = Account.builder()
                 .email(signupForm.getEmail())
                 .nickname(signupForm.getNickname())
-                .roles(List.of("ROLE_USER"))
+//                .roles(List.of("ROLE_USER"))
                 .password(passwordEncoder.encode(signupForm.getPassword()))
                 .build();
 
@@ -95,7 +95,7 @@ public class AuthenticationService {
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+//        Authentication a = SecurityContextHolder.getContext().getAuthentication();
 
         if(SecurityContextHolder.getContext().getAuthentication() == null) {
             System.out.println("Service Authentication Null");

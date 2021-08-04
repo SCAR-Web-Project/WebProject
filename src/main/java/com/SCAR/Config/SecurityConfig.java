@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                         .antMatchers("/auth/log-in", "/auth/sign-up", "/post/list").permitAll() // 가입, 로그인에 대한 권한 해제
-                        .anyRequest().hasRole("USER") // 나머지 요청에 대해 USER ROLE 을 가져야만 접근 가능
+                        .anyRequest().authenticated() // 나머지 요청에 대해 USER ROLE 을 가져야만 접근 가능
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }

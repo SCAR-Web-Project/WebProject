@@ -101,14 +101,15 @@ class AuthenticationControllerTest {
         signUpForm.setPassword("12345678");
         authenticationService.processNewAccount(signUpForm);
 
-        Authentication authentication = Mockito.mock(Authentication.class);
-        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
+//        Authentication authentication = Mockito.mock(Authentication.class);
+//        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+//        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+//        SecurityContextHolder.setContext(securityContext);
 
         mockMvc.perform(get("/auth/log-in")
                 .param("email", "chanho@email.com").param("password", "12345678"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(authenticated());
 
         if(SecurityContextHolder.getContext().getAuthentication() == null) {
             System.out.println("Authentication Null");
