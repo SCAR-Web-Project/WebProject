@@ -68,11 +68,6 @@ class AuthenticationControllerTest {
         signUpForm.setNickname("chanho");
         signUpForm.setPassword("12345678");
 
-        Authentication authentication = Mockito.mock(Authentication.class);
-        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
-
         mockMvc.perform(post("/auth/sign-up")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(signUpForm)))
@@ -100,11 +95,6 @@ class AuthenticationControllerTest {
         signUpForm.setNickname("chanho");
         signUpForm.setPassword("12345678");
         authenticationService.processNewAccount(signUpForm);
-
-        Authentication authentication = Mockito.mock(Authentication.class);
-        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
 
         mockMvc.perform(get("/auth/log-in")
                 .param("email", "chanho@email.com").param("password", "12345678"))
